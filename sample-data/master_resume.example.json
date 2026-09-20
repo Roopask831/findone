@@ -1,0 +1,31 @@
+{
+  "name": "Alex Java",
+  "email": "alex@example.com",
+  "phone": "555-0100",
+  "location": "United States",
+  "linkedin": "https://linkedin.com/in/example",
+  "github": "https://github.com/example",
+  "summary": "Backend developer focused on Java and Spring Boot APIs.",
+  "roles": [
+    {
+      "title": "Java Developer",
+      "company": "Acme",
+      "start_date": "2022-01",
+      "end_date": "Present",
+      "bullets": [
+        "Built Spring Boot REST APIs used by internal tools",
+        "Designed microservices and data models in SQL"
+      ]
+    }
+  ],
+  "skills": ["Java", "Spring Boot", "REST", "Microservices", "SQL"],
+  "education": [
+    {
+      "school": "State University",
+      "degree": "B.S.",
+      "field": "Computer Science",
+      "end_date": "2021"
+    }
+  ],
+  "certifications": ["AWS Certified Cloud Practitioner"]
+}

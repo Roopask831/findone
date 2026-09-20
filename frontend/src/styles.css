@@ -1,0 +1,75 @@
+:root {
+  font-family: Segoe UI, sans-serif;
+  color: #1b1b1b;
+  background: #f4f1ea;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+h1 {
+  margin: 0 0 8px;
+}
+
+.banner {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin: 16px 0 24px;
+  font-weight: 600;
+}
+
+.banner.on {
+  background: #d8f3dc;
+  color: #1b4332;
+}
+
+.banner.off {
+  background: #fde2e1;
+  color: #6a040f;
+}
+
+form,
+pre {
+  background: #fff;
+  border: 1px solid #ddd4c4;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+label {
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: 600;
+}
+
+input,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+}
+
+button {
+  margin-top: 16px;
+  padding: 10px 16px;
+  background: #3d348b;
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.error {
+  color: #9b2226;
+}
+
+.ok {
+  color: #2d6a4f;
+}

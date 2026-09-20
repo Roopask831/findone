@@ -1,0 +1,28 @@
+java:
+  - java
+  - j2ee
+  - jdk
+  - jre
+spring boot:
+  - spring boot
+  - springboot
+  - spring-boot
+  - spring framework
+  - spring
+rest:
+  - rest
+  - restful
+  - rest api
+  - rest apis
+microservices:
+  - microservices
+  - micro-services
+  - microservice
+sql:
+  - sql
+  - mysql
+  - postgresql
+  - postgres
+kubernetes:
+  - kubernetes
+  - k8s

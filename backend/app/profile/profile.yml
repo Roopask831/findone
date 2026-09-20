@@ -1,0 +1,70 @@
+work_start: "06:00"
+work_end: "15:30"
+poll_minutes: 20
+strong: 75
+good: 50
+core_weight: 2.0
+nice_weight: 0.7
+jd_char_cap: 8000
+max_bullets_per_role: 6
+playwright_timeout_ms: 45000
+apply_concurrency: 1
+finish_current_at_window_end: true
+
+# Keep false until the product works end-to-end. Then set true for 06:00–15:30 only.
+enforce_work_window: false
+
+country: US
+work_modes:
+  - remote
+  - hybrid
+  - onsite
+needs_sponsorship: false
+
+target_titles:
+  - Java Developer
+  - Java Backend Developer
+  - Backend Software Engineer
+  - Backend Developer
+  - Software Engineer
+  - Software Engineer I
+  - Software Engineer II
+  - Software Developer
+  - Java Software Engineer
+  - Spring Boot Developer
+  - Microservices Developer
+  - API Developer
+  - REST API Developer
+  - Application Developer
+  - Software Development Engineer
+  - SDE I
+
+title_aliases:
+  swe: Software Engineer
+  sde: Software Development Engineer
+  sde i: SDE I
+  sde 1: SDE I
+  java backend: Java Backend Developer
+  backend engineer: Backend Software Engineer
+
+search_queries:
+  - Java Developer
+  - Java Backend
+  - Spring Boot
+  - Backend Software Engineer
+  - Java Software Engineer
+  - REST API Developer
+
+forever_no_companies: []
+hard_no_phrases: []
+
+contact:
+  first_name: ""
+  last_name: ""
+  email: ""
+  phone: ""
+  city: ""
+  linkedin_url: ""
+  github_url: ""
+  work_authorized_us: true
+  sponsorship_required: false

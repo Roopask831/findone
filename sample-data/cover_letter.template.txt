@@ -1,0 +1,19 @@
+Dear Hiring Manager,
+
+I am writing to express my interest in the [Job Title] position at [Company Name]. I am a Software Engineer with 2+ years of professional experience developing Java-based backend applications and microservices, along with a Master’s degree in Computer Science from Montclair State University. My experience with Java, Spring Boot, REST APIs, Spring Security, Hibernate, JPA, SQL, and AWS aligns well with the technical requirements of this position.
+
+In my previous role at Cognizant Technology Solutions, I developed and maintained scalable Java backend microservices using Java 8/17, Spring Boot, Spring MVC, Spring Data JPA, and Hibernate. I designed RESTful APIs, implemented JWT-based authentication and role-based authorization using Spring Security, optimized MySQL queries and database operations, and contributed to the migration of functionality from a monolithic application to microservices. I also worked with Kafka for asynchronous workflows and Docker and AWS EC2 for application deployment.
+
+I have also gained experience in testing, debugging, API documentation, Git-based development, and Agile/Scrum environments. In addition to my professional experience, I have built projects involving Java Spring Boot microservices, MySQL, Spring Security, Docker, AWS, and REST APIs, which have strengthened my understanding of backend development and scalable application design.
+
+My Master’s degree in Computer Science has further strengthened my foundation in algorithms, databases, and software development, while my academic and personal projects have allowed me to apply these concepts to practical problems.
+
+I am particularly interested in this opportunity because [add 1–2 specific sentences about the company, product, team, or role]. I believe my combination of professional web development experience, backend engineering skills, and academic background would allow me to contribute effectively to your team.
+
+Thank you for considering my application. I would welcome the opportunity to discuss how my experience and skills align with the [Job Title] position at [Company Name].
+
+Sincerely,
+Roopa S Kalled
+Edison, NJ
+[skalledroopa@gmail.com](mailto:skalledroopa@gmail.com)
+LinkedIn | GitHub | Portfolio
