@@ -3,17 +3,30 @@ java:
   - j2ee
   - jdk
   - jre
+  - java8
+  - java 8
+  - java17
+  - java 17
 spring boot:
   - spring boot
   - springboot
   - spring-boot
   - spring framework
   - spring
+  - spring mvc
+hibernate:
+  - hibernate
+  - hibernate orm
+jpa:
+  - jpa
+  - spring data jpa
+  - spring data
 rest:
   - rest
   - restful
   - rest api
   - rest apis
+  - restful apis
 microservices:
   - microservices
   - micro-services
@@ -23,6 +36,38 @@ sql:
   - mysql
   - postgresql
   - postgres
+mongodb:
+  - mongodb
+  - mongo
+kafka:
+  - kafka
+  - apache kafka
+docker:
+  - docker
+aws:
+  - aws
+  - amazon web services
+  - ec2
 kubernetes:
   - kubernetes
   - k8s
+junit:
+  - junit
+  - junit5
+  - mockito
+react:
+  - react
+  - react.js
+  - reactjs
+security:
+  - spring security
+  - jwt
+maven:
+  - maven
+git:
+  - git
+  - github
+linux:
+  - linux
+python:
+  - python

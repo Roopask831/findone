@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 
 from app.config import clock_in_work_window, load_profile, operations_allowed
 from app.db import get_db, get_engine
-from app.models import Resume
+from app.models import Job, Resume
 from app.scheduler import next_poll_at
 from app.schemas import StatusOut
 
@@ -41,8 +41,8 @@ def get_status(db: Session = Depends(get_db)) -> StatusOut:
         database_ready=bool(db_file and Path(db_file).is_file()),
         counts={
             "applied_today": 0,
-            "on_hold": 0,
-            "skipped": 0,
-            "queue": 0,
+            "on_hold": db.query(Job).filter(Job.status == "On hold").count(),
+            "skipped": db.query(Job).filter(Job.status == "Skipped").count(),
+            "queue": db.query(Job).filter(Job.status == "Queued").count(),
         },
     )

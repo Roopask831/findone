@@ -1,0 +1,41 @@
+{
+  "jobs": [
+    {
+      "job_id": "java-acme-1",
+      "title": "Java Developer",
+      "company": "Acme Labs",
+      "location": "Remote, United States",
+      "apply_url": "https://boards.greenhouse.io/acme/jobs/1",
+      "source_portal": "greenhouse",
+      "posted_date": "2026-09-22",
+      "jd_text": "Java Developer\n\nRequirements:\n- Professional experience with Java and Spring Boot\n- Build REST APIs and microservices\n- Hibernate and JPA for SQL MySQL access\n- Docker and AWS deployments\n- Unit tests with JUnit\n"
+    },
+    {
+      "job_id": "android-trap-1",
+      "title": "Android Intern",
+      "company": "PhoneCo",
+      "location": "New York, NY",
+      "apply_url": "https://jobs.lever.co/phoneco/android-intern",
+      "source_portal": "lever",
+      "jd_text": "Android Intern\n\nRequirements:\n- Professional experience with Java and Spring Boot\n- Build REST APIs and microservices\n"
+    },
+    {
+      "job_id": "li-skip-1",
+      "title": "Backend Software Engineer",
+      "company": "LinkedCorp",
+      "location": "United States",
+      "apply_url": "https://www.linkedin.com/jobs/view/123",
+      "source_portal": "linkedin",
+      "jd_text": "Backend Software Engineer\n\nRequirements:\n- Java and Spring Boot REST APIs\n"
+    },
+    {
+      "job_id": "vague-1",
+      "title": "Java Developer",
+      "company": "VagueCo",
+      "location": "Remote, United States",
+      "apply_url": "https://boards.greenhouse.io/vague/jobs/9",
+      "source_portal": "greenhouse",
+      "jd_text": "Join us.\nBenefits:\n- 401k\n- Unlimited PTO\nEqual opportunity:\n- We celebrate diversity\n"
+    }
+  ]
+}

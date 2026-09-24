@@ -5,8 +5,32 @@ const API_KEY = import.meta.env.VITE_FINDONE_KEY || "change-me-local";
 export default function App() {
   const [status, setStatus] = useState(null);
   const [current, setCurrent] = useState(null);
+  const [jobs, setJobs] = useState([]);
+  const [jobFilter, setJobFilter] = useState("all");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [scoreResult, setScoreResult] = useState(null);
+
+  async function onScore(event) {
+    event.preventDefault();
+    setError("");
+    setMessage("");
+    const form = event.target;
+    const response = await fetch("/api/score", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: form.job_title.value,
+        jd_text: form.jd_text.value,
+      }),
+    });
+    const payload = await response.json();
+    if (!response.ok) {
+      setError(payload.detail ? JSON.stringify(payload.detail) : "Score failed");
+      return;
+    }
+    setScoreResult(payload);
+  }
 
   async function load() {
     const statusResp = await fetch("/api/status");
@@ -16,6 +40,10 @@ export default function App() {
       setCurrent(await resumeResp.json());
     } else {
       setCurrent(null);
+    }
+    const jobsResp = await fetch("/api/jobs");
+    if (jobsResp.ok) {
+      setJobs(await jobsResp.json());
     }
   }
 
@@ -61,8 +89,50 @@ export default function App() {
     await load();
   }
 
+  async function onImportJobs(event) {
+    event.preventDefault();
+    setError("");
+    setMessage("");
+    const file = event.target.job_pool.files[0];
+    if (!file) {
+      setError("Choose a job_pool JSON file");
+      return;
+    }
+    let parsed;
+    try {
+      parsed = JSON.parse(await file.text());
+    } catch {
+      setError("Invalid JSON file");
+      return;
+    }
+    const jobsList = Array.isArray(parsed) ? parsed : parsed.jobs;
+    if (!Array.isArray(jobsList)) {
+      setError("JSON must be a list of jobs or { jobs: [...] }");
+      return;
+    }
+    const response = await fetch("/api/jobs/import", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-FindOne-Key": API_KEY,
+      },
+      body: JSON.stringify({ jobs: jobsList }),
+    });
+    const payload = await response.json();
+    if (!response.ok) {
+      setError(payload.detail ? JSON.stringify(payload.detail) : "Import failed");
+      return;
+    }
+    setMessage(
+      `Imported ${payload.created} new, ${payload.updated} updated · queued ${payload.queued} · skipped ${payload.skipped}`,
+    );
+    await load();
+  }
+
   const running = status?.running;
   const clockOff = status && !status.enforce_work_window;
+  const visibleJobs =
+    jobFilter === "all" ? jobs : jobs.filter((job) => job.status === jobFilter);
 
   return (
     <main>
@@ -114,6 +184,94 @@ export default function App() {
 
       {current && (
         <>
+          <h2>Import job pool</h2>
+          <p>
+            Upload a JSON file with a <code>jobs</code> list (see{" "}
+            <code>sample-data/job_pool.example.json</code>). Each job is scored and stored.
+          </p>
+          <form onSubmit={onImportJobs}>
+            <label htmlFor="job_pool">job_pool.json</label>
+            <input id="job_pool" name="job_pool" type="file" accept=".json,application/json" required />
+            <button type="submit">Import and score</button>
+          </form>
+
+          <h2>Jobs ({visibleJobs.length})</h2>
+          {status?.counts && (
+            <p>
+              Queued {status.counts.queue} · Skipped {status.counts.skipped} · On hold{" "}
+              {status.counts.on_hold}
+            </p>
+          )}
+          <label htmlFor="job_filter">Filter status</label>
+          <select
+            id="job_filter"
+            value={jobFilter}
+            onChange={(event) => setJobFilter(event.target.value)}
+          >
+            <option value="all">All</option>
+            <option value="Queued">Queued</option>
+            <option value="Skipped">Skipped</option>
+            <option value="On hold">On hold</option>
+          </select>
+          {visibleJobs.length === 0 ? (
+            <p>No jobs in this filter yet.</p>
+          ) : (
+            <table className="jobs">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Company</th>
+                  <th>Location</th>
+                  <th>Score</th>
+                  <th>Tier</th>
+                  <th>Status</th>
+                  <th>View</th>
+                </tr>
+              </thead>
+              <tbody>
+                {visibleJobs.map((job) => (
+                  <tr key={job.job_id}>
+                    <td>
+                      <a href={`/jobs/${encodeURIComponent(job.job_id)}`}>{job.title}</a>
+                    </td>
+                    <td>{job.company}</td>
+                    <td>{job.location}</td>
+                    <td>{job.score}</td>
+                    <td>{job.tier}</td>
+                    <td>
+                      {job.status}
+                      {job.hold_reason ? ` (${job.hold_reason})` : ""}
+                    </td>
+                    <td>
+                      <a href={`/jobs/${encodeURIComponent(job.job_id)}`}>View</a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          <p>View opens the stored listing in FindOne. Sample apply URLs are not real company pages.</p>
+
+          <h2>Score a job description</h2>
+          <p>Paste a title and JD. Scoring uses your saved resume only — no AI API.</p>
+          <form onSubmit={onScore}>
+            <label htmlFor="job_title">Job title</label>
+            <input id="job_title" name="job_title" placeholder="Java Developer" />
+            <label htmlFor="jd_text">Job description</label>
+            <textarea id="jd_text" name="jd_text" rows="12" required />
+            <button type="submit">Score this job</button>
+          </form>
+          {scoreResult && (
+            <pre>
+              {scoreResult.tier} · {scoreResult.score} / 100 · {scoreResult.scoring_status}
+              {"\n"}
+              {scoreResult.reasoning}
+              {"\n\nMatched:\n"}
+              {(scoreResult.matched_requirements || []).join("\n") || "(none)"}
+              {"\n\nGaps:\n"}
+              {(scoreResult.gaps || []).join("\n") || "(none)"}
+            </pre>
+          )}
           <h2>Saved cover letter</h2>
           <pre>{current.cover_letter_template}</pre>
           <h2>Saved resume text</h2>

@@ -15,6 +15,7 @@ from app.auth import require_api_key
 from app.db import get_db
 from app.models import Resume
 from app.pdf_text import extract_pdf_text, resume_dict_from_pdf_text
+from app.resume_normalize import canonical_resume
 from app.resume_text import flatten_resume
 from app.schemas import MasterResume, ResumeOut
 
@@ -46,7 +47,7 @@ def _read_resume_json(raw: str) -> dict:
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"resume_json is not valid JSON: {exc.msg}",
         ) from exc
-    parsed = MasterResume.model_validate(payload)
+    parsed = MasterResume.model_validate(canonical_resume(payload))
     return parsed.model_dump()
 
 

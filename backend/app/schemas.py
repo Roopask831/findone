@@ -63,3 +63,69 @@ class StatusOut(BaseModel):
     next_poll: str | None = None
     database_ready: bool = False
     counts: dict[str, int]
+
+
+class ScoreIn(BaseModel):
+    title: str = ""
+    jd_text: str
+
+
+class ScoreOut(BaseModel):
+    title: str = ""
+    score: int
+    tier: str
+    scoring_status: str
+    matched_requirements: list[str]
+    gaps: list[str]
+    reasoning: str
+    title_in_family: bool
+
+
+class JobIn(BaseModel):
+    job_id: str | None = None
+    id: str | None = None
+    title: str = ""
+    company: str = ""
+    location: str = ""
+    jd_text: str = ""
+    description: str | None = None
+    apply_url: str = ""
+    url: str | None = None
+    source_portal: str | None = None
+    source: str | None = None
+    posted_date: str | None = None
+
+
+class JobImportIn(BaseModel):
+    jobs: list[JobIn]
+
+
+class JobOut(BaseModel):
+    job_id: str
+    title: str
+    company: str
+    location: str
+    apply_url: str
+    source: str
+    posted_date: str | None = None
+    first_seen_at: datetime | None = None
+    score: int
+    tier: str
+    status: str
+    hold_reason: str | None = None
+    scoring_status: str
+    matched_requirements: list[str]
+    gaps: list[str]
+    reasoning: str
+    title_in_family: bool | None = None
+    jd_text: str | None = None
+
+
+class JobImportOut(BaseModel):
+    seen: int
+    created: int
+    updated: int
+    queued: int
+    skipped: int
+    on_hold: int
+

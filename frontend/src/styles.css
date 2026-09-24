@@ -9,7 +9,7 @@ body {
 }
 
 main {
-  max-width: 820px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 24px 16px 48px;
 }
@@ -73,3 +73,29 @@ button {
 .ok {
   color: #2d6a4f;
 }
+
+select {
+  padding: 8px;
+  margin-bottom: 12px;
+}
+
+table.jobs {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #ddd4c4;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+table.jobs th,
+table.jobs td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+}
+
+table.jobs th {
+  background: #efe8d8;
+}
+

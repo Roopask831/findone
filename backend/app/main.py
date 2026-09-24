@@ -1,4 +1,4 @@
-"""FindOne FastAPI app — Phase 0 skeleton (status + SQLite) and Phase 1 resume store."""
+"""FindOne FastAPI app — Phase 0–3."""
 
 from __future__ import annotations
 
@@ -8,7 +8,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app import config
+from app.api.jobs import pages as job_pages
+from app.api.jobs import router as jobs_router
 from app.api.resumes import router as resumes_router
+from app.api.score import router as score_router
 from app.api.status import router as status_router
 from app.db import init_db
 
@@ -33,6 +36,9 @@ app.add_middleware(
 )
 app.include_router(status_router)
 app.include_router(resumes_router)
+app.include_router(score_router)
+app.include_router(jobs_router)
+app.include_router(job_pages)
 
 
 @app.get("/")

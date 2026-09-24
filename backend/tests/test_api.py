@@ -1,12 +1,6 @@
 import json
 from pathlib import Path
 
-import pytest
-from fastapi.testclient import TestClient
-
-from app import config, db
-from app.config import Settings
-
 MIN_PDF = b"%PDF-1.4\n1 0 obj<<>>endobj\ntrailer<<>>\n%%EOF\n"
 
 SAMPLE = {
@@ -25,21 +19,6 @@ SAMPLE = {
     "education": [{"school": "State University", "degree": "B.S.", "field": "CS"}],
     "certifications": ["AWS CCP"],
 }
-
-
-@pytest.fixture
-def client(tmp_path, monkeypatch):
-    settings = Settings(findone_key="test-key")
-    settings.data_dir = tmp_path / "data"
-    settings.data_dir.mkdir()
-    config.get_settings.cache_clear()
-    monkeypatch.setattr(config, "get_settings", lambda: settings)
-    db.reset_engine()
-    from app.main import app
-
-    with TestClient(app) as test_client:
-        yield test_client, settings
-    db.reset_engine()
 
 
 def test_status_ok(client):
@@ -150,3 +129,33 @@ def test_reject_invalid_json(client):
         files={"pdf": ("resume.pdf", MIN_PDF, "application/pdf")},
     )
     assert response.status_code == 400
+
+
+def test_score_endpoint_uses_current_resume(client):
+    test_client, _settings = client
+    uploaded = test_client.post(
+        "/api/resumes",
+        headers={"X-FindOne-Key": "test-key"},
+        data={
+            "resume_json": json.dumps(SAMPLE),
+            "cover_letter_template": "Dear {company}",
+        },
+        files={"pdf": ("resume.pdf", MIN_PDF, "application/pdf")},
+    )
+    assert uploaded.status_code == 201, uploaded.text
+    response = test_client.post(
+        "/api/score",
+        json={
+            "title": "Java Developer",
+            "jd_text": (
+                "Java Developer\n\nRequirements:\n"
+                "- Professional experience with Java and Spring Boot REST APIs\n"
+                "- Build backend services used by internal tools every day\n"
+            ),
+        },
+    )
+    assert response.status_code == 200, response.text
+    body = response.json()
+    assert body["scoring_status"] == "scored"
+    assert "tier" in body
+    assert body["score"] >= 0
